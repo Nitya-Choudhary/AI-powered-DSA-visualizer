@@ -662,23 +662,23 @@ const Visualizer = () => {
   const renderMainDisplay = () => {
     if (topic === "Sorting" || topic === "Searching" || topic === "Arrays") {
       return (
-        <div className="bars-container panel">
+        <div className="flex items-end h-80 gap-1 overflow-x-auto p-5 bg-gray-800 border border-gray-600 rounded-xl mb-6">
           {array.map((value, idx) => {
             const isActive = active.includes(idx);
             const isCompleted = completed.includes(idx);
             return (
               <div
                 key={idx}
-                className={`bar ${
-                  isActive ? 'active' : isCompleted ? 'sorted' : ''
-                }`}
+                className={`flex-1 rounded transition-all duration-300 min-w-5 relative ${
+                  isActive ? 'bg-yellow-500' : isCompleted ? 'bg-green-500' : 'bg-blue-500'
+                } ${isActive ? 'scale-110' : ''}`}
                 style={{
                   height: `${value * 2.2}px`,
                   width: `${Math.max(8, 520 / array.length)}px`,
                 }}
                 title={`Index ${idx}: ${value}`}
               >
-                <span className="bar-label">{value}</span>
+                <span className="absolute bottom-1 left-1/2 transform -translate-x-1/2 text-white font-bold text-xs">{value}</span>
               </div>
             );
           })}
@@ -688,7 +688,7 @@ const Visualizer = () => {
 
     if (topic === "Graph") {
       return (
-        <div className="panel">
+        <div className="p-5 bg-gray-800 border border-gray-600 rounded-xl mb-6">
           <div className="flex flex-wrap justify-center gap-4 mb-4">
             {graph.nodes.map((node, idx) => {
               const isActive = active.includes(idx);
@@ -696,16 +696,16 @@ const Visualizer = () => {
               return (
                 <div
                   key={node}
-                  className={`circle-node ${
-                    isActive ? 'active' : isVisited ? 'sorted' : ''
-                  }`}
+                  className={`flex items-center justify-center w-12 h-12 rounded-full font-bold transition-all duration-300 ${
+                    isActive ? 'bg-yellow-500 scale-110' : isVisited ? 'bg-green-500' : 'bg-blue-600'
+                  } text-white`}
                 >
                   {node}
                 </div>
               );
             })}
           </div>
-          <div className="text-center">Edges: {graph.edges.map((edge) => edge.join("-")).join(", ")}</div>
+          <div className="text-center text-gray-300">Edges: {graph.edges.map((edge) => edge.join("-")).join(", ")}</div>
         </div>
       );
     }
@@ -713,17 +713,17 @@ const Visualizer = () => {
     if (topic === "Tree") {
       const currentId = active[0] || null;
       return (
-        <div className="panel">
+        <div className="p-5 bg-gray-800 border border-gray-600 rounded-xl mb-6">
           <div className="flex flex-wrap justify-center gap-4">
             {tree.map((node) => {
               const selected = node.id === currentId;
               return (
                 <div
                   key={node.id}
-                  className={`tree-node ${selected ? 'active' : ''}`}
+                  className={`flex flex-col items-center justify-center w-16 h-16 rounded-lg font-bold transition-all duration-300 ${selected ? 'bg-yellow-500 scale-110' : 'bg-blue-600'} text-white`}
                 >
                   {node.value}
-                  <small>{node.id}</small>
+                  <small className="text-xs text-gray-300">{node.id}</small>
                 </div>
               );
             })}
@@ -734,12 +734,14 @@ const Visualizer = () => {
 
     if (topic === "Strings") {
       return (
-        <div className="panel">
-          <div className="text-center string-display">
+        <div className="p-5 bg-gray-800 border border-gray-600 rounded-xl mb-6">
+          <div className="text-center">
             {stringInput.split("").map((char, idx) => (
               <span
                 key={idx}
-                className={active.includes(idx) ? 'highlight-char' : ''}
+                className={`inline-block mx-1 px-2 py-1 rounded ${
+                  active.includes(idx) ? 'bg-yellow-500 text-gray-900' : 'text-gray-200'
+                }`}
               >
                 {char}
               </span>
@@ -751,12 +753,12 @@ const Visualizer = () => {
 
     if (topic === "Tries") {
       return (
-        <div className="panel">
+        <div className="p-5 bg-gray-800 border border-gray-600 rounded-xl mb-6">
           <div className="flex flex-wrap justify-center gap-4">
             {Object.keys(steps[stepIndex - 1]?.trie || {}).map((key) => (
               <div
                 key={key}
-                className="trie-node"
+                className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-600 text-white font-bold"
               >
                 {key}
               </div>
@@ -768,30 +770,30 @@ const Visualizer = () => {
 
     if (topic === "Data Structures") {
       return (
-        <div className="ds-grid">
-          <div className="panel">
-            <h3>Stack</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="p-5 bg-gray-800 border border-gray-600 rounded-xl">
+            <h3 className="text-lg font-bold text-blue-400 mb-4">Stack</h3>
             {stack.length ? stack.slice().reverse().map((value, index) => (
-              <div key={`${value}-${index}`} className="ds-item">
+              <div key={`${value}-${index}`} className="p-2 mb-2 bg-blue-600 text-white rounded text-center">
                 {value}
               </div>
-            )) : <div className="ds-empty">Empty</div>}
+            )) : <div className="p-4 text-gray-500 text-center">Empty</div>}
           </div>
-          <div className="panel">
-            <h3>Queue</h3>
+          <div className="p-5 bg-gray-800 border border-gray-600 rounded-xl">
+            <h3 className="text-lg font-bold text-blue-400 mb-4">Queue</h3>
             {queue.length ? queue.map((value, index) => (
-              <div key={`${value}-${index}`} className="ds-item">
+              <div key={`${value}-${index}`} className="p-2 mb-2 bg-blue-600 text-white rounded text-center">
                 {value}
               </div>
-            )) : <div className="ds-empty">Empty</div>}
+            )) : <div className="p-4 text-gray-500 text-center">Empty</div>}
           </div>
-          <div className="panel">
-            <h3>Linked List</h3>
+          <div className="p-5 bg-gray-800 border border-gray-600 rounded-xl">
+            <h3 className="text-lg font-bold text-blue-400 mb-4">Linked List</h3>
             {linkedList.length ? linkedList.map((value, index) => (
-              <div key={`${value}-${index}`} className="ds-item">
+              <div key={`${value}-${index}`} className="p-2 mb-2 bg-blue-600 text-white rounded text-center">
                 {value}
               </div>
-            )) : <div className="ds-empty">Empty</div>}
+            )) : <div className="p-4 text-gray-500 text-center">Empty</div>}
           </div>
         </div>
       );
@@ -799,19 +801,19 @@ const Visualizer = () => {
 
     if (topic === "Custom Code") {
       return (
-        <div className="panel">
+        <div className="p-5 bg-gray-800 border border-gray-600 rounded-xl mb-6">
           <textarea
             value={code}
             onChange={(e) => setCode(e.target.value)}
             placeholder="Paste your code here..."
             rows={20}
             cols={80}
-            className="code-input"
+            className="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
           />
           <button
             onClick={start}
             disabled={isRunning}
-            className="primary-button"
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors"
           >
             Visualize Code
           </button>
@@ -823,15 +825,19 @@ const Visualizer = () => {
   };
 
   return (
-    <div className="container">
-      <h1 className="title">🚀 DSA AI Visualizer</h1>
-      <p className="subtitle">Multi-topic interactive algorithm suite with live stage animation.</p>
+    <div className="max-w-7xl mx-auto p-6 bg-gray-900 text-white min-h-screen">
+      <h1 className="text-center text-4xl font-bold mb-2 text-indigo-400">🚀 DSA AI Visualizer</h1>
+      <p className="text-center mb-6 text-gray-300">Multi-topic interactive algorithm suite with live stage animation.</p>
 
-      <div className="tabs">
+      <div className="flex flex-wrap justify-center mb-6 border-b border-gray-600">
         {Object.keys(topicToAlgorithms).map((name) => (
           <button
             key={name}
-            className={`tab-button ${topic === name ? 'active' : ''}`}
+            className={`px-5 py-2 mx-1 mb-2 border-none rounded-t-lg transition-all duration-300 ${
+              topic === name
+                ? 'bg-blue-600 text-white scale-105'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'
+            }`}
             onClick={() => setTopic(name)}
           >
             {name}
@@ -839,66 +845,66 @@ const Visualizer = () => {
         ))}
       </div>
 
-      <div className="panel">
+      <div className="p-5 bg-gray-800 border border-gray-600 rounded-xl text-gray-200 mb-6">
         {topicDetails[topic]}
       </div>
 
-      <div className="controls">
-        <div className="control-group">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-6 p-5 bg-gray-800 border border-gray-600 rounded-xl">
+        <div className="flex flex-col gap-2">
           <button
             onClick={initArray}
             disabled={isRunning || topic !== "Sorting"}
-            className="primary-button"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors"
           >
             New Array
           </button>
         </div>
 
-        <div className="control-group">
+        <div className="flex flex-col gap-2">
           <button
             onClick={start}
             disabled={isRunning}
-            className="primary-button"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors"
           >
             Start
           </button>
         </div>
 
-        <div className="control-group">
+        <div className="flex flex-col gap-2">
           <button
             onClick={pause}
             disabled={!isRunning}
-            className="primary-button"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors"
           >
             {isPaused ? "Resume" : "Pause"}
           </button>
         </div>
 
-        <div className="control-group">
+        <div className="flex flex-col gap-2">
           <button
             onClick={reset}
-            className="secondary-button"
+            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
           >
             Reset
           </button>
         </div>
 
-        <div className="control-group">
+        <div className="flex flex-col gap-2">
           <button
             onClick={suggestAlgorithm}
-            className="primary-button"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             AI Suggest
           </button>
         </div>
 
-        <div className="control-group">
-          <label className="form-label">
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-bold text-gray-200">
             <span>Algorithm:</span>
             <select
               value={algorithm}
               onChange={(e) => setAlgorithm(e.target.value)}
-              className="select-input"
+              className="w-full mt-1 px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="auto">Auto</option>
               {getAvailableAlgo().map(([key, label]) => (
@@ -909,35 +915,35 @@ const Visualizer = () => {
         </div>
 
         {topic === "Searching" && (
-          <label className="form-field">
-            <span>Target:</span>
+          <label className="flex flex-col gap-2">
+            <span className="text-sm font-bold text-gray-200">Target:</span>
             <input
               type="number"
               value={targetValue}
               onChange={(e) => setTargetValue(e.target.value)}
-              className="form-input"
+              className="px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </label>
         )}
 
         {topic === "Arrays" && (
           <>
-            <label className="form-field">
-              <span>Value:</span>
+            <label className="flex flex-col gap-2">
+              <span className="text-sm font-bold text-gray-200">Value:</span>
               <input
                 type="number"
                 value={insertValue}
                 onChange={(e) => setInsertValue(e.target.value)}
-                className="form-input"
+                className="px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </label>
-            <label className="form-field">
-              <span>Index:</span>
+            <label className="flex flex-col gap-2">
+              <span className="text-sm font-bold text-gray-200">Index:</span>
               <input
                 type="number"
                 value={insertIndex}
                 onChange={(e) => setInsertIndex(e.target.value)}
-                className="form-input"
+                className="px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </label>
           </>
@@ -945,41 +951,41 @@ const Visualizer = () => {
 
         {topic === "Strings" && (
           <>
-            <label className="form-field">
-              <span>String:</span>
+            <label className="flex flex-col gap-2">
+              <span className="text-sm font-bold text-gray-200">String:</span>
               <input
                 type="text"
                 value={stringInput}
                 onChange={(e) => setStringInput(e.target.value)}
-                className="bg-slate-700 text-white px-3 py-2 rounded-lg border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </label>
-            <label className="form-field">
-              <span>Pattern:</span>
+            <label className="flex flex-col gap-2">
+              <span className="text-sm font-bold text-gray-200">Pattern:</span>
               <input
                 type="text"
                 value={pattern}
                 onChange={(e) => setPattern(e.target.value)}
-                className="form-input"
+                className="px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </label>
           </>
         )}
 
         {topic === "Tries" && (
-          <label className="form-field">
-            <span>Word:</span>
+          <label className="flex flex-col gap-2">
+            <span className="text-sm font-bold text-gray-200">Word:</span>
             <input
               type="text"
               value={trieWord}
               onChange={(e) => setTrieWord(e.target.value)}
-              className="bg-slate-700 text-white px-3 py-2 rounded-lg border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </label>
         )}
 
-        <label className="flex flex-col">
-          <span className="text-sm mb-1">Speed: {speed}</span>
+        <label className="flex flex-col gap-2">
+          <span className="text-sm font-bold text-gray-200">Speed: {speed}</span>
           <input
             type="range"
             min="10"
@@ -991,28 +997,28 @@ const Visualizer = () => {
         </label>
       </div>
 
-      <div className="status-grid">
-        <div className="status-card"><strong>Topic:</strong> {topic}</div>
-        <div className="status-card"><strong>Algorithm:</strong> {chosenAlgorithm || "-"}</div>
-        <div className="status-card"><strong>Step:</strong> {stepIndex}/{steps.length}</div>
-        <div className="status-card"><strong>Messages:</strong> {message}</div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="bg-gray-700 text-gray-200 border border-gray-600 rounded-xl p-4 text-center"><strong>Topic:</strong> {topic}</div>
+        <div className="bg-gray-700 text-gray-200 border border-gray-600 rounded-xl p-4 text-center"><strong>Algorithm:</strong> {chosenAlgorithm || "-"}</div>
+        <div className="bg-gray-700 text-gray-200 border border-gray-600 rounded-xl p-4 text-center"><strong>Step:</strong> {stepIndex}/{steps.length}</div>
+        <div className="bg-gray-700 text-gray-200 border border-gray-600 rounded-xl p-4 text-center"><strong>Messages:</strong> {message}</div>
       </div>
 
       {renderMainDisplay()}
 
-      <div className="legend-row">
-        <div className="legend-item">
-          <span className="legend-dot active-dot"></span> Active
+      <div className="flex justify-center gap-8 mb-6">
+        <div className="flex items-center gap-2 text-gray-200">
+          <span className="w-4 h-4 bg-yellow-500 rounded-full"></span> Active
         </div>
-        <div className="legend-item">
-          <span className="legend-dot completed-dot"></span> Completed
+        <div className="flex items-center gap-2 text-gray-200">
+          <span className="w-4 h-4 bg-green-500 rounded-full"></span> Completed
         </div>
       </div>
 
-      <div className="panel">
-        <h3 className="section-title">Step Preview</h3>
+      <div className="p-5 bg-gray-800 border border-gray-600 rounded-xl">
+        <h3 className="text-xl font-bold text-blue-400 mb-4">Step Preview</h3>
         {steps.slice(Math.max(0, stepIndex - 5), stepIndex).map((step, index) => (
-          <div key={index} className="log-item">
+          <div key={index} className="py-1 border-b border-gray-600 text-gray-300 last:border-b-0">
             [{index + 1}] {step.message || step.type}
           </div>
         ))}
