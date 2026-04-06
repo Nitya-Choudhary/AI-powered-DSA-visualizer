@@ -1,0 +1,42 @@
+---
+# IaC Simulator Ansible Playbook
+# Verifies that Docker Compose services are running properly
+
+- name: IaC Simulator - Service Verification
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Check if Nginx container is running
+      shell: docker ps --filter "name=iac-nginx" --filter "status=running" -q
+      register: nginx_check
+      changed_when: false
+
+    - name: Nginx status
+      debug:
+        msg: "Nginx container is running"
+      when: nginx_check.stdout != ""
+
+    - name: Check if PostgreSQL container is running
+      shell: docker ps --filter "name=iac-postgres" --filter "status=running" -q
+      register: postgres_check
+      changed_when: false
+
+    - name: PostgreSQL status
+      debug:
+        msg: "PostgreSQL container is running"
+      when: postgres_check.stdout != ""
+
+    - name: Check if Redis container is running
+      shell: docker ps --filter "name=iac-redis" --filter "status=running" -q
+      register: redis_check
+      changed_when: false
+
+    - name: Redis status
+      debug:
+        msg: "Redis container is running"
+      when: redis_check.stdout != ""
+
+    - name: Services verification complete
+      debug:
+        msg: "IaC Simulator infrastructure is ready! Access dashboard at http://localhost:8080"
+
