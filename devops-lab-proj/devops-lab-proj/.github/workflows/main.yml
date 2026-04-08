@@ -1,0 +1,53 @@
+name: IaC Simulator Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    name: Ansible Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Ansible
+        run: pip install ansible
+
+      - name: Validate Ansible Playbook Syntax
+        working-directory: ./ansible
+        run: ansible-playbook site.yml --syntax-check
+
+  docker-compose:
+    name: Docker Compose Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Docker Compose
+        run: sudo apt-get update && sudo apt-get install -y docker-compose
+
+      - name: Validate Docker Compose
+        run: docker-compose config -q
+
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Check for secrets
+        run: |
+          if grep -r "password\|token\|secret" *.md ansible/ 2>/dev/null | grep -v "example" | grep -v "Password:" | grep -v "password:" ; then
+            echo "Warning: Found potential secrets in files"
+            exit 1
+          fi
+          echo "No exposed secrets found"

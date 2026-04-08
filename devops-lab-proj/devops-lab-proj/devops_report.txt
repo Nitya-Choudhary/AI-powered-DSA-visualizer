@@ -1,0 +1,72 @@
+DEVOPS REPORT
+Time: 2026-04-06 18:45:29.767005
+
+Running Containers:
+CONTAINER ID   IMAGE                COMMAND                  CREATED             STATUS                       PORTS                                         NAMES
+8316943a9403   nginx:alpine         "/docker-entrypoint.…"   About an hour ago   Up About an hour (healthy)   0.0.0.0:8081->80/tcp, [::]:8081->80/tcp       iac-nginx
+c0a630d12c6f   postgres:15-alpine   "docker-entrypoint.s…"   8 days ago          Up 2 hours (healthy)         0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp   iac-postgres
+3e18f2eaea35   redis:7-alpine       "docker-entrypoint.s…"   8 days ago          Up 2 hours (healthy)         0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp   iac-redis
+
+System Info:
+
+Host Name:                     LAPTOP-MLBO5G7N
+OS Name:                       Microsoft Windows 11 Home Single Language
+OS Version:                    10.0.26200 N/A Build 26200
+OS Manufacturer:               Microsoft Corporation
+OS Configuration:              Standalone Workstation
+OS Build Type:                 Multiprocessor Free
+Registered Owner:              NITYA
+Registered Organization:       N/A
+Product ID:                    00342-42658-75156-AAOEM
+Original Install Date:         21-02-2025, 10:16:14
+System Boot Time:              03-04-2026, 10:40:36
+System Manufacturer:           ASUSTeK COMPUTER INC.
+System Model:                  Vivobook_ASUSLaptop X1404VA_X1404VA
+System Type:                   x64-based PC
+Processor(s):                  1 Processor(s) Installed.
+                               [01]: Intel64 Family 6 Model 186 Stepping 3 GenuineIntel ~1300 Mhz
+BIOS Version:                  American Megatrends International, LLC. X1404VA.312, 21-01-2025
+Windows Directory:             C:\WINDOWS
+System Directory:              C:\WINDOWS\system32
+Boot Device:                   \Device\HarddiskVolume1
+System Locale:                 en-us;English (United States)
+Input Locale:                  00004009
+Time Zone:                     (UTC+05:30) Chennai, Kolkata, Mumbai, New Delhi
+Total Physical Memory:         16,017 MB
+Available Physical Memory:     3,240 MB
+Virtual Memory: Max Size:      23,661 MB
+Virtual Memory: Available:     946 MB
+Virtual Memory: In Use:        22,715 MB
+Page File Location(s):         C:\pagefile.sys
+Domain:                        WORKGROUP
+Logon Server:                  \\LAPTOP-MLBO5G7N
+Hotfix(s):                     4 Hotfix(s) Installed.
+                               [01]: KB5074828
+                               [02]: KB5054156
+                               [03]: KB5086672
+                               [04]: KB5079387
+Network Card(s):               1 NIC(s) Installed.
+                               [01]: MediaTek Wi-Fi 6E MT7902 Wireless LAN Card
+                                     Connection Name: Wi-Fi
+                                     DHCP Enabled:    Yes
+                                     DHCP Server:     192.168.1.1
+                                     IP address(es)
+                                     [01]: 192.168.1.24
+                                     [02]: fe80::8095:1c1f:60dd:ecaa
+                                     [03]: 2401:4900:1c46:98eb:fddd:c5f2:16f4:675d
+                                     [04]: 2401:4900:1c46:98eb:2b50:ac98:56c9:2fee
+Virtualization-based security: Status: Running
+                               Required Security Properties:
+                               Available Security Properties:
+                                     Base Virtualization Support
+                                     Secure Boot
+                                     DMA Protection
+                                     UEFI Code Readonly
+                                     Mode Based Execution Control
+                                     APIC Virtualization
+                               Services Configured:
+                               Services Running:
+                               App Control for Business policy: Enforced
+                               App Control for Business user mode policy: Off
+                               Security Features Enabled:
+Hyper-V Requirements:          A hypervisor has been detected. Features required for Hyper-V will not be displayed.
